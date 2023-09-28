@@ -68,7 +68,7 @@ def process(example):
 
 from datasets import Audio
 
-samples_to_load = 2       # How many samples to load
+samples_to_load = len(ds)       # How many samples to load
 cores = 1                 # How many processes to use for the loading
 sampling_rate = 44100     # Sampling rate for the audio, keep in 44100
 writer_batch_size = 1000  # How many examples to keep in memory per worker. Reduce if OOM.
@@ -81,12 +81,16 @@ ds = ds.select(range(samples_to_load))
 data_dir = Path(data_dir)
 data_dir.mkdir(exist_ok=True, parents=True)
 
-ds = ds.map(
-        process,
-        num_proc=cores,
-        writer_batch_size=writer_batch_size,
-        keep_in_memory=False
-    ).cast_column('audio', Audio(sampling_rate=sampling_rate))
+# ds = ds.map(
+#         process,
+#         num_proc=cores,
+#         writer_batch_size=writer_batch_size,
+#         keep_in_memory=False
+#     ).cast_column('audio', Audio(sampling_rate=sampling_rate))
+for i, item in enumerate(ds):
+    process(item)
+    print(f"Done Processing Item: {item['ytid']} - {(i+1)}/{len(ds)}")
+
 
 
 print('\ndone')
