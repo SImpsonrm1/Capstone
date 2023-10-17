@@ -81,15 +81,30 @@ ds = ds.select(range(samples_to_load))
 data_dir = Path(data_dir)
 data_dir.mkdir(exist_ok=True, parents=True)
 
+# Get missing downloads
+downloads = os.listdir(data_dir)
+completed_downloads = []
+for item in downloads:
+    completed_downloads.append(item[:-4])
+
+missing_downloads = (list(set(ds['ytid']).difference(completed_downloads)))
+
+for i, item in enumerate(ds):
+    if item['ytid'] in missing_downloads: 
+        process(item)
+        print(f"Done Processing Item: {item['ytid']} - {(i+1)}/{len(ds)}")
+
 # ds = ds.map(
 #         process,
 #         num_proc=cores,
 #         writer_batch_size=writer_batch_size,
 #         keep_in_memory=False
 #     ).cast_column('audio', Audio(sampling_rate=sampling_rate))
-for i, item in enumerate(ds):
-    process(item)
-    print(f"Done Processing Item: {item['ytid']} - {(i+1)}/{len(ds)}")
+
+
+# for i, item in enumerate(ds):
+#     process(item)
+#     print(f"Done Processing Item: {item['ytid']} - {(i+1)}/{len(ds)}")
 
 
 
