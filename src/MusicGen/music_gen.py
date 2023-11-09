@@ -51,7 +51,7 @@ def main():
     # Save to output directory
     outfile_name = description.replace(" ", "_") + '.wav'
     sampling_rate = model.sample_rate
-    scipy.io.wavfile.write(('Captsone\output\\' + outfile_name), rate=sampling_rate, data=output[0].cpu().numpy())
+    scipy.io.wavfile.write(('Capstone/output/' + outfile_name), rate=sampling_rate, data=output[0].cpu().numpy())
     print(f"Done Generating.\nSaved to {outfile_name}")
 
     import matplotlib.pyplot as plt
@@ -85,7 +85,7 @@ def main():
 
     plt.suptitle(f"'{description}' - Tempo: {tempo} bpm", fontsize=15)
     plt.tight_layout()
-    plt.savefig(('Captsone\output\\' + outfile_name))
+    plt.savefig(('Capstone/output/' + outfile_name))
 
 if __name__ == '__main__':
     main()
