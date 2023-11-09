@@ -72,17 +72,17 @@ semantic_transformer = SemanticTransformer(
     audio_text_condition = True      # this must be set to True (same for CoarseTransformer and FineTransformers)
 ).cuda()
 
-# trainer = SemanticTransformerTrainer(
-#     transformer = semantic_transformer,
-#     wav2vec = wav2vec,
-#     audio_conditioner = quantizer,   # pass in the MulanEmbedQuantizer instance above
-#     folder ='./Capstone/data/audio',
-#     batch_size = 1,
-#     data_max_length = 320 * 32,
-#     num_train_steps = 1
-# )
+trainer = SemanticTransformerTrainer(
+    transformer = semantic_transformer,
+    wav2vec = wav2vec,
+    audio_conditioner = quantizer,   # pass in the MulanEmbedQuantizer instance above
+    folder ='./Capstone/data/audio',
+    batch_size = 1,
+    data_max_length = 320 * 32,
+    num_train_steps = 1
+)
 
-# trainer.train()
+trainer.train()
 
 
 # from musiclm_pytorch import MusicLM
